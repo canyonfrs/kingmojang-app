@@ -1,4 +1,4 @@
-# kingmojang-app
+# kingmojang
 
 An Electron application with React and TypeScript
 
