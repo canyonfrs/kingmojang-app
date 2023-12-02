@@ -9,10 +9,12 @@ export default defineConfig({
     react(),
     vanillaExtractPlugin(),
     VitePWA({
-      filename: "킹모장",
       registerType: "autoUpdate",
       includeAssets: ["robots.txt"],
       manifest: {
+        name: "킹모장",
+        short_name: "킹모장",
+        lang: "ko",
         theme_color: "#ffffff",
         icons: [
           {
