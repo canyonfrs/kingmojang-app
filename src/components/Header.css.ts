@@ -19,7 +19,7 @@ export const topContainer = style({
   display: "flex",
   alignItems: "center",
 
-  padding: "10px",
+  padding: "5px 10px",
 });
 
 export const topLeft = style({
@@ -43,9 +43,6 @@ export const topRight = style({
 
 export const bottomContainer = style({
   display: "flex",
-  gap: "14px",
-
-  padding: "0 10px",
 
   // truncated
   overflow: "hidden",

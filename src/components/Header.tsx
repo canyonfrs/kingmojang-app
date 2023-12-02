@@ -1,5 +1,8 @@
+import * as Menubar from "@radix-ui/react-menubar";
+
 import * as Styled from "./Header.css";
 import { Logo } from "./Logo";
+import { 도움말, 보기, 서식, 파일, 편집 } from "./menus";
 
 const Header = () => {
   return (
@@ -15,13 +18,13 @@ const Header = () => {
           <CloseIcon />
         </div>
       </div>
-      <div className={Styled.bottomContainer}>
-        <span>파일(F)</span>
-        <span>편집(E)</span>
-        <span>서식(O)</span>
-        <span>보기(V)</span>
-        <span>도움말(H)</span>
-      </div>
+      <Menubar.Root className={Styled.bottomContainer}>
+        <파일 />
+        <편집 />
+        <서식 />
+        <보기 />
+        <도움말 />
+      </Menubar.Root>
     </header>
   );
 };
