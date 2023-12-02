@@ -3,7 +3,8 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
-const faviconURL = "/favicon.svg";
+const logoSvg512 = "/logo512.svg";
+const logoPng512 = "/logo512.png";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,19 +12,20 @@ export default defineConfig({
     react(),
     vanillaExtractPlugin(),
     VitePWA({
+      filename: "킹모장",
       registerType: "autoUpdate",
-      includeAssets: [faviconURL],
+      includeAssets: [logoSvg512],
       manifest: {
         theme_color: "#ffffff",
         icons: [
           {
-            src: faviconURL,
+            src: logoSvg512,
             sizes: "512x512",
             type: "image/svg+xml",
             purpose: "any maskable",
           },
           {
-            src: faviconURL,
+            src: logoPng512,
             sizes: "512x512",
             type: "image/png",
           },
