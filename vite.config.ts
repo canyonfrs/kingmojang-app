@@ -16,6 +16,7 @@ export default defineConfig({
         short_name: "킹모장",
         lang: "ko",
         theme_color: "#ffffff",
+        description: "찍어찍어찍어",
         icons: [
           {
             src: "/logo-x64.png",
