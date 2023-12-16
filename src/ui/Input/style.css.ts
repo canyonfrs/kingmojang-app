@@ -6,7 +6,7 @@ export const input = style({
 
   fontSize: "16px",
 
-  padding: "6px",
+  padding: "4px",
 
   backgroundColor: "#FFFFFF",
 
