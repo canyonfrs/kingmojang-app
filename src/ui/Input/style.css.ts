@@ -4,9 +4,9 @@ export const input = style({
   width: "100%",
   height: "100%",
 
-  fontSize: "16px",
+  fontSize: "14px",
 
-  padding: "4px",
+  padding: "6px",
 
   backgroundColor: "#FFFFFF",
 
