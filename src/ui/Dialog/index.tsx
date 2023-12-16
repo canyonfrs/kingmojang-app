@@ -14,6 +14,7 @@ interface DialogProps {
   primaryButton?: React.ReactNode;
 }
 
+// TODO: title, description, closeButton, primaryButton 같은 것들은 composable 하게 만들어야할까?
 export const Dialog = (props: DialogProps) => {
   const { trigger, title, description, content, closeButton, primaryButton } = props;
   return (
