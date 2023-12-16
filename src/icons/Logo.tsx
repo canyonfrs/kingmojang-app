@@ -1,8 +1,19 @@
-import type { SVGProps } from "react";
+import clsx from "clsx";
 
-const Logo = (props: SVGProps<SVGSVGElement>) => {
+import type { IconProps } from "./types";
+
+export const LogoIcon = (props: IconProps) => {
+  const { size = 16, className } = props;
   return (
-    <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      {...props}
+      className={clsx(className)}
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M23.5685 21.5283L23.6045 3.57188C23.6045 2.64498 22.8135 1.88165 21.8607 1.88165H4.81798C3.84719 1.88165 3.07416 2.62681 3.07416 3.57188V21.5283C3.07416 22.4552 3.86517 23.2185 4.81798 23.2185H21.8247C22.7955 23.2003 23.5685 22.4552 23.5685 21.5283Z"
         fill="#58DADF"
@@ -114,5 +125,3 @@ const Logo = (props: SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
-
-export { Logo };

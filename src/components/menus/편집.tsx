@@ -1,28 +1,26 @@
-import * as Menubar from "@radix-ui/react-menubar";
-
-import * as Styled from "./menu.css";
+import * as Menubar from "../../ui/Menu";
 
 export const 편집 = () => {
   return (
     <Menubar.Menu>
       <Menubar.Trigger asChild>
-        <span className={Styled.trigger}>편집(E)</span>
+        <span>편집(E)</span>
       </Menubar.Trigger>
 
       <Menubar.Portal>
-        <Menubar.Content className={Styled.content}>
-          <Menubar.Item className={Styled.item}>
+        <Menubar.Content>
+          <Menubar.Item>
             <span>에욱(N)</span>
-            <span className={Styled.rightSlot}>Ctrl+N</span>
+            <span>Ctrl+N</span>
           </Menubar.Item>
-          <Menubar.Item className={Styled.item}>
+          <Menubar.Item>
             <span>에욱(W)</span>
-            <span className={Styled.rightSlot}>Ctrl+Shift+N</span>
+            <span>Ctrl+Shift+N</span>
           </Menubar.Item>
-          <Menubar.Separator className={Styled.seperator} />
-          <Menubar.Item className={Styled.item}>
+          <Menubar.Separator />
+          <Menubar.Item>
             <span>에욱(O)</span>
-            <span className={Styled.rightSlot}>Ctrl+O</span>
+            <span>Ctrl+O</span>
           </Menubar.Item>
         </Menubar.Content>
       </Menubar.Portal>

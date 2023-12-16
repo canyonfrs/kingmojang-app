@@ -10,6 +10,10 @@ export const trigger = style({
 
   cursor: "pointer",
 
+  ":hover": {
+    backgroundColor: "#f1f1f1",
+  },
+
   selectors: {
     '&[data-state="open"]': {
       background: "rgba(204, 232, 255, 1)",

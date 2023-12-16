@@ -1,7 +1,7 @@
 import * as Styled from "./App.css";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
-import { Textarea } from "./components/Textarea";
+import { Textarea } from "./ui/Textarea";
 
 function App() {
   return (

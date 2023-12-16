@@ -1,8 +1,8 @@
 import * as Form from "@radix-ui/react-form";
 
-import * as Styled from "./Textarea.css";
+import * as Styled from "./style.css";
 
-const Textarea = () => {
+export const Textarea = () => {
   return (
     <Form.Root className={Styled.container}>
       <Form.Field className={Styled.field} name="memo">
@@ -13,5 +13,3 @@ const Textarea = () => {
     </Form.Root>
   );
 };
-
-export { Textarea };
