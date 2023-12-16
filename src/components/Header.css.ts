@@ -43,6 +43,15 @@ export const topRight = style({
 
 export const bottomContainer = style({
   display: "flex",
+  justifyContent: "space-between",
+
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+});
+
+export const bottomLeftContainer = style({
+  display: "flex",
 
   // truncated
   overflow: "hidden",
