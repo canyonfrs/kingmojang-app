@@ -1,8 +1,6 @@
 import type { AxiosRequestConfig } from "axios";
 import axios from "axios";
 
-import { BASE_URL } from "../constants/url";
-
 export type RequestMethod = "GET" | "POST" | "DELETE" | "PUT";
 export interface RequestAPIType extends Omit<AxiosRequestConfig, "baseURL"> {
   method: RequestMethod;
@@ -16,7 +14,7 @@ export type RequestConfigType = Omit<RequestAPIType, "url" | "method" | "baseURL
 export async function axiosRequest<T>({ url, params, method, errorHandler, ...restProps }: RequestAPIType) {
   const response = await axios
     .request<T>({
-      baseURL: BASE_URL,
+      baseURL: import.meta.env.VITE_API_URL,
       method,
       url,
       params,
