@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
 
 interface TextAreaInterface {
@@ -5,11 +6,20 @@ interface TextAreaInterface {
   resizeStep?: number;
 }
 
+export type Coordinate = {
+  row: number;
+  column: number;
+};
+
 const MINIMUM_FONTSIZE = 10;
 
 export default function useTextArea({ defaultFontSize = 24, resizeStep = 2 }: TextAreaInterface) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [fontSize, setFontSize] = useState(defaultFontSize);
+  const [coordinate, setCoordinate] = useState<Coordinate>({
+    row: 0,
+    column: 0,
+  });
 
   const handleWheel = (event: WheelEvent) => {
     if (event.ctrlKey) {
@@ -32,10 +42,11 @@ export default function useTextArea({ defaultFontSize = 24, resizeStep = 2 }: Te
   // 키보드 이벤트 핸들러
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.ctrlKey || event.metaKey) {
-      event.preventDefault();
       if (event.key === "=") {
+        event.preventDefault();
         adjustFontSize("plus");
       } else if (event.key === "-") {
+        event.preventDefault();
         adjustFontSize("minus");
       }
     }
@@ -46,7 +57,19 @@ export default function useTextArea({ defaultFontSize = 24, resizeStep = 2 }: Te
 
     if (textarea) {
       textarea.addEventListener("wheel", (ev) => handleWheel(ev));
-      textarea.addEventListener("keydown", (ev) => handleKeyDown(ev));
+      textarea.addEventListener("keydown", (ev) => {
+        setTimeout(() => {
+          // keydown 비동기 해결하려 추가
+          getCursorPositionOnArrowKey();
+        }, 0);
+        handleKeyDown(ev);
+      });
+      textarea.addEventListener("click", () => {
+        setTimeout(() => {
+          // keydown 비동기 해결하려 추가
+          getCursorPositionOnClick();
+        }, 0);
+      });
     }
 
     return () => {
@@ -63,5 +86,33 @@ export default function useTextArea({ defaultFontSize = 24, resizeStep = 2 }: Te
     }
   }, [fontSize]);
 
-  return { textareaRef };
+  function getCursorPositionOnClick() {
+    if (!textareaRef.current) return;
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    const cursorPos = textareaRef.current.selectionStart;
+
+    // 클릭된 위치의 행과 열을 계산
+    const textBeforeCursor = textarea.value.substring(0, cursorPos);
+    const lines = textBeforeCursor.split("\n");
+    const currentRow = lines.length;
+    const currentColumn = lines[lines.length - 1].length;
+    setCoordinate({ row: currentRow, column: currentColumn });
+    return { row: currentRow, column: currentColumn };
+  }
+
+  function getCursorPositionOnArrowKey() {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    const cursorPos = textarea.selectionStart;
+
+    const textBeforeCursor = textarea.value.substring(0, cursorPos);
+    const lines = textBeforeCursor.split("\n");
+    const currentRow = lines.length;
+    const currentColumn = lines[lines.length - 1].length;
+    setCoordinate({ row: currentRow, column: currentColumn });
+    return { row: currentRow, column: currentColumn };
+  }
+
+  return { textareaRef, coordinate };
 }
