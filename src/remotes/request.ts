@@ -14,7 +14,9 @@ export type RequestConfigType = Omit<RequestAPIType, "url" | "method" | "baseURL
 export async function axiosRequest<T>({ url, params, method, errorHandler, ...restProps }: RequestAPIType) {
   const response = await axios
     .request<T>({
-      baseURL: import.meta.env.VITE_API_URL,
+      baseURL: import.meta.env.DEV
+        ? `${import.meta.env.VITE_API_DEV_URL}/api/v1`
+        : `${import.meta.env.VITE_API_PROD_URL}/api/v1`,
       method,
       url,
       params,

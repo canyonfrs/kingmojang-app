@@ -14,5 +14,7 @@ async function validateVerificationCode(code: string) {
 }
 
 export function useValidateVerificationCode(code: string) {
-  return useQuery([QUERY_KEY, code], () => validateVerificationCode(code));
+  return useQuery([QUERY_KEY, code], () => validateVerificationCode(code), {
+    enabled: false,
+  });
 }

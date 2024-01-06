@@ -15,3 +15,8 @@ export const formError = style({
   fontSize: "12px",
   color: "red",
 });
+
+export const formValid = style({
+  fontSize: "12px",
+  color: "green",
+});
