@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuthDispatch, useAuthState } from "../../context/AuthContext";
+import { useValidateVerificationCode } from "../../hooks/useValidateVerificationCode";
 import { Button } from "../../ui/Button";
 import { Dialog } from "../../ui/Dialog";
 import { Input } from "../../ui/Input";
@@ -8,21 +9,15 @@ import * as Menubar from "../../ui/Menu";
 import * as Styled from "./설정.css";
 
 export const 설정 = () => {
-  const { auth, isAuth, logout } = useAuth();
-  const [code, setCode] = React.useState<string>("");
+  const { user, authCode } = useAuthState();
+  const { auth, logout, setAuthCode } = useAuthDispatch();
+
   const [error, setError] = React.useState<string>("");
   const [isValid, setIsValid] = React.useState<boolean>(false);
 
-  // const { refetch, data, isRefetching } = useValidateVerificationCode(code);
+  const { data, refetch } = useValidateVerificationCode(authCode);
 
   const validateCode = (code: string) => {
-    // TODO: remove this
-    if (code !== "streamer_token") {
-      setError("인증 코드가 일치하지 않습니다.");
-      setIsValid(false);
-      return false;
-    }
-
     if (!code) {
       setError("인증 코드를 입력해주세요.");
       setIsValid(false);
@@ -35,29 +30,44 @@ export const 설정 = () => {
       return false;
     }
 
-    setError("");
-    setIsValid(true);
     return true;
   };
 
-  const verifyCode = (e: React.FormEvent<HTMLFormElement>) => {
+  const verifyCode = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!validateCode(code)) {
+    if (!validateCode(authCode)) {
       return;
     }
 
-    // TODO: 로컬스토리지에 저장하고, 새로고침 했을 때
-    // refetch();
+    const { data, error } = await refetch();
+    const successStatus = data?.status;
+    const errorStatus = error?.response?.status;
+
+    if (errorStatus === 401) {
+      setError("유효하지 않은 인증 코드입니다.");
+      setIsValid(false);
+      return;
+    } else if (successStatus === 200) {
+      setError("");
+      setIsValid(true);
+      return;
+    } else {
+      setError("알 수 없는 오류가 발생했습니다.");
+      setIsValid(false);
+      return;
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
-    setCode(value);
+    setAuthCode(value);
   };
 
   const handleAuth = () => {
-    auth(code);
+    const user = data?.data;
+    if (!user) return;
+    auth(user);
   };
 
   return (
@@ -83,10 +93,10 @@ export const 설정 = () => {
             description="이메일로 받은 인증 코드를 입력해주세요."
             content={
               <>
-                {isAuth ? (
+                {user ? (
                   <>
                     <p>이미 인증되었습니다.</p>
-                    <Button onClick={logout}>로그아웃</Button>
+                    <Button onClick={logout}>인증 초기화</Button>
                   </>
                 ) : (
                   <>
@@ -96,7 +106,7 @@ export const 설정 = () => {
                         required
                         name="verificationCode"
                         placeholder="인증 코드 입력"
-                        value={code}
+                        value={authCode}
                         onChange={handleChange}
                       />
                       <Button type="submit">인증</Button>
@@ -111,7 +121,7 @@ export const 설정 = () => {
             closeButton={<Button>취소</Button>}
             primaryButton={
               <Button onClick={handleAuth} disabled={!isValid}>
-                {isAuth ? "인증됨" : "등록"}
+                {user ? "인증됨" : "등록"}
               </Button>
             }
           />
